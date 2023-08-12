@@ -1,0 +1,7 @@
+lambda/node_modules
+lambda/dist
+lambda/tmp
+lambda/tsconfig.tsbuildinfo
+.ask/
+ask-resources.json
+test_output

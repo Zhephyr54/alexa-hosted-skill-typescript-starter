@@ -1,0 +1,44 @@
+{
+  "manifest": {
+    "privacyAndCompliance": {
+      "locales": {
+        "en-US": {},
+        "fr-FR": {}
+      },
+      "shoppingKit": {
+        "isAmazonAssociatesOnAlexaEnabled": false,
+        "isShoppingActionsEnabled": false
+      }
+    },
+    "publishingInformation": {
+      "automaticDistribution": {
+        "isActive": false
+      },
+      "distributionCountries": [],
+      "isAvailableWorldwide": true,
+      "locales": {
+        "en-US": {
+          "summary": "A TypeScript skill Hello World example",
+          "examplePhrases": [],
+          "keywords": [
+            "Alexa open hello world",
+            "hello",
+            "say hi"
+          ],
+          "name": "Hello World TypeScript"
+        },
+        "fr-FR": {
+          "summary": "Un exemple de skill Hello World écrit en TypeScript",
+          "examplePhrases": [],
+          "keywords": [
+            "Alexa ouvre bonjour tout le monde",
+            "bonjour",
+            "dis bonjour"
+          ],
+          "name": "Hello World TypeScript"
+        }
+      },
+      "testingInstructions": "{\"ask_dist_username\":\"\",\"ask_dist_password\":\"\"}"
+    }
+  }
+}

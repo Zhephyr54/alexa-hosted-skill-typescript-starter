@@ -1,0 +1,48 @@
+{
+  "name": "hello-world-typescript",
+  "version": "1.0.15",
+  "description": "A complete TypeScript `Hello-World` skill example.",
+  "main": "index.js",
+  "author": "Zhephyr",
+  "license": "Apache License",
+  "engines": {
+    "node": "^16"
+  },
+  "scripts": {
+    "prepare": "cd .. && husky install lambda/.husky",
+    "clean": "rimraf dist tsconfig.tsbuildinfo",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "lint:watch": "esw . -w --ext .ts --fix",
+    "postinstall": "npm run clean && npm run build",
+    "dev": "node scripts/debug-reload",
+    "test": "npm run build && cd .. && bst test && cd lambda/",
+    "deploy": "node scripts/deploy"
+  },
+  "dependencies": {
+    "ask-sdk-core": "^2.7.0",
+    "ask-sdk-model": "^1.19.0",
+    "aws-sdk": "^2.326.0",
+    "i18next": "23.0.1",
+    "i18next-fs-backend": "^2.1.5",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@nut-tree/nut-js": "^3.1.2",
+    "@types/node": "^20.4.5",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "ask-sdk-local-debug": "^1.1.0",
+    "concurrently": "^8.2.0",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^8.9.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-watch": "^8.0.0",
+    "husky": "^8.0.0",
+    "prettier": "^3.0.0",
+    "tsc-watch": "^6.0.4",
+    "yesno": "^0.4.0"
+  }
+}

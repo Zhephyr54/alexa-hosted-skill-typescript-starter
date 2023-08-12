@@ -1,0 +1,23 @@
+# This is the localization file for en-US. Please, modify the values so that they align
+# with your voice app responses for this locale
+
+# Launch
+launchPrompt: Welcome to a full TypeScript Skill example, you can say hello!
+# Help
+helpPrompt: You can say hello to me!
+helpReprompt: How can I help you?
+# Stop
+stopPrompt: Goodbye!
+# Cancel
+cancelPrompt: OK, goodbye!
+# Fallback
+fallbackPrompt: The Hello World in TypeScript skill can't help you with that, but you can ask me to say hello.
+fallbackReprompt: How can I help you?
+# Error
+errorPrompt: Sorry, I can not understand your request. Please say again.
+errorReprompt: Sorry, I still cannot understand your request.
+
+# Hello World
+helloPrompt: Hello everyone!
+helloCardContent: Hello everyone!
+helloCardTitle: Hello World in TypeScript

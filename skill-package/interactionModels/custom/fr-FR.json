@@ -1,0 +1,42 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "bonjour tout le monde",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "slots": [],
+                    "name": "HelloWorldIntent",
+                    "samples": [
+                        "bonjour",
+                        "salut",
+                        "hello",
+                        "dis bonjour",
+                        "dis hello world",
+                        "comment vas-tu"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}

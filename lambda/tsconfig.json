@@ -1,0 +1,21 @@
+{
+    // Targeting Node.js v16
+    "compilerOptions": {
+        "target": "ES2021",
+        "module": "commonjs",
+        "lib": ["ES2021"],
+        "sourceMap": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "composite": true,
+        "strict": true,
+        "noUnusedLocals": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": ["src/**/*", "src/**/*.json"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}

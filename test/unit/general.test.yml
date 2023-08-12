@@ -1,0 +1,42 @@
+configuration:
+    description: General tests
+    locales: en-US, fr-FR
+---
+- test: Launch and ask for help
+- LaunchRequest: launchPrompt
+- AMAZON.HelpIntent:
+      - prompt: helpPrompt
+      - reprompt: helpReprompt
+---
+- test: Ask for help then stop
+- LaunchRequest # Empty expected part means we are not testing the response
+- AMAZON.HelpIntent:
+      - prompt: helpPrompt
+- AMAZON.StopIntent:
+      - prompt: stopPrompt
+---
+- test: Ask for help then cancel
+- LaunchRequest
+- AMAZON.HelpIntent:
+      - prompt: helpPrompt
+- AMAZON.CancelIntent:
+      - prompt: cancelPrompt
+---
+- test: Launch then stop
+- LaunchRequest
+- AMAZON.StopIntent:
+      - prompt: stopPrompt
+---
+- test: Launch then end session
+- SessionEndedRequest
+---
+- test: Launch then send fallback
+- AMAZON.FallbackIntent:
+      - prompt: fallbackPrompt
+      - reprompt: fallbackReprompt
+---
+- test: Launch-then-send-request-not-handled
+- LaunchRequest
+- AMAZON.NavigateHomeIntent:
+      - prompt: errorPrompt
+      - reprompt: errorReprompt

@@ -1,0 +1,10 @@
+configuration:
+    description: Tests to say hello
+    locales: en-US, fr-FR
+---
+- test: Launch then say hello
+- LaunchRequest
+- HelloWorldIntent:
+      - prompt: helloPrompt
+      - cardContent: helloCardContent
+      - cardTitle: helloCardTitle

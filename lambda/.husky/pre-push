@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Warn and ask for confirmation if pushing to master
+# without any changes made to the package.json file
+# because it would prevent an npm install and the postinstall script running
+# to compile TS files on the AWS Lambda of the Alexa-hosted skill
+
+IsMasterBranch() {
+    local BRANCH_NAME="$1"
+    local PATTERN="^(refs/heads/)?(master$)"
+
+    if [[ "$BRANCH_NAME" =~ $PATTERN ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+WasPackageFileModified() {
+    if git diff --quiet origin/master -- lambda/package.json; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+while read local_ref local_sha remote_ref remote_sha; do
+    if IsMasterBranch "$remote_ref" && ! WasPackageFileModified; then
+        exec < /dev/tty
+        while true; do
+            read -p $'By pushing to master directly without updating the package.json file, the Development Version of your skill won\'t reflect your last changes because it will prevent the TS files compilation at the AWS Lambda level.\n Either use "npm run deploy" to handle this automatically or manually update your package.json file before pushing to master.\n Are you sure you want to proceed (answer "no" to change your file before pushing)? (Y/n)\n' yn
+            if [ "$yn" = "" ]; then
+                yn='N'
+            fi
+            case $yn in
+                [Yy]* ) echo "Resuming push"; exit 0;;
+                [Nn]* ) echo "Cancelling push"; exit 1;;
+                * ) echo "Please answer yes or no.";;
+            esac
+        done
+    fi
+done
+exit 0

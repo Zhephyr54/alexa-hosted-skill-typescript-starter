@@ -1,0 +1,10 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+    "editor.formatOnSaveMode": "file",
+    "eslint.validate": ["typescript"],
+    "eslint.workingDirectories": ["./lambda"],
+    "prettier.configPath": "lambda/.prettierrc.js"
+}

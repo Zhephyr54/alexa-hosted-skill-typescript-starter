@@ -1,0 +1,13 @@
+{
+    "launchResponse": "Bienvenue dans un exemple complet de Skill écrit en TypeScript, vous pouvez dire bonjour !",
+    "simpleCardTitle": "Hello World en TypeScript",
+    "cancelResponse": "OK, à bientôt !",
+    "helpResponse": "Vous pouvez me dire bonjour !",
+    "helpReprompt": "Comment puis-je vous aider ?",
+    "stopResponse": "À bientôt !",
+    "fallbackResponse": "La skill Hello World en TypeScript ne peut pas vous aider pour cela, mais je peux vous dire bonjour.",
+    "fallbackReprompt": "Comment puis-je vous aider ?",
+    "helloWorld": "Bonjour tout le monde !",
+    "errorResponse": "Désolé, je n'ai pas compris votre demande. Pouvez-vous répéter ?",
+    "errorReprompt": "Désolé, je ne comprends toujours pas votre demande."
+}
