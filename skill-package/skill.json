@@ -1,5 +1,12 @@
 {
   "manifest": {
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": ""
+        }
+      }
+    },
     "privacyAndCompliance": {
       "locales": {
         "en-US": {},
