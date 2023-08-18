@@ -1,6 +1,6 @@
 {
   "name": "hello-world-typescript",
-  "version": "1.0.15",
+  "version": "1.0.0",
   "description": "A complete TypeScript `Hello-World` skill example.",
   "main": "index.js",
   "author": "Zhephyr",
