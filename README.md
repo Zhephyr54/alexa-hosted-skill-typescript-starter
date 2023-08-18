@@ -7,12 +7,12 @@ This project is a boilerplate to start developping an Alexa hosted-skill with Ty
 -   TypeScript code
 -   [Eslint with TypeScript plugin](https://typescript-eslint.io)
 -   Prettier to get the style right
--   type safe [i18next](https://www.i18next.com) for internationalization and localization (with english and french for starting)
+-   type safe [i18next](https://www.i18next.com) for internationalization and localization (with English and French for starting)
 -   [i18next-fs-backend](https://github.com/i18next/i18next-fs-backend) to dynamically load localization files (no changes needed to source code when adding a new language)
--   a command to easily and quickly deploy to the Alexa-hosted skill Development version ([see more](#deploying))
--   a command to directly [run and debug your local code from VS Code](https://developer.amazon.com/en-US/docs/alexa/ask-toolkit/vs-code-testing-simulator.html#test) compiling and reloading after code changes ([see more](#running-with-debug))
--   a git pre-push hook (with [husky](https://typicode.github.io/husky/)) to trigger a warning when pushing directly to master without doing any changes to the package.json file (it would prevent the TypeScript file compilation on the AWS Lambda side)
--   [Bespoken](https://read.bespoken.io/unit-testing/guide/#overview) for Unit Testing ([see more](#running-unit-tests))
+-   a [run command](#vs-code-only-running-with-debug) to directly [run and debug your local code from VS Code](https://developer.amazon.com/en-US/docs/alexa/ask-toolkit/vs-code-testing-simulator.html#test) while compiling and reloading after code changes
+-   a [deploy command](#deploying) to easily and quickly deploy to the Alexa-hosted skill Development version
+-   a [test command](<(#unit-testing)>) using [Bespoken](https://read.bespoken.io/unit-testing/guide/#overview) for Unit Testing
+-   a git pre-push hook (with [husky](https://typicode.github.io/husky)) to trigger a warning when pushing directly to master without doing any changes to the package.json file (it would prevent the TypeScript file compilation on the AWS Lambda side)
 
 It was generated using the official ask-V2 `ask-cli new` command, then modified in order to have it TypeScripted.
 It is thus intented to be fully compatible with the `ask` V2 commands.
@@ -22,12 +22,21 @@ It is thus intented to be fully compatible with the `ask` V2 commands.
 -   [alexa-skill-typescript-boilerplate-ask-v2](https://github.com/ThomasVuillaume/alexa-skill-typescript-boilerplate-ask-v2) by Thomas Vuillaume
 -   [Alexa-Hosted-Typescript-Starter](https://github.com/gotwig/Alexa-Hosted-Typescript-Starter) by gotwig
 
-## Requirements
+## Prerequisites
 
 A global installation is required for the following packages:
 
--   ask-cli [2.30.4] : `npm install -g ask-cli`
--   bespoken-tools [2.6.7] : `npm install -g bespoken-tools`
+-   ask-cli [2.30.4]:
+
+```bash
+npm install -g ask-cli
+```
+
+-   bespoken-tools [2.6.7]:
+
+```bash
+npm install -g bespoken-tools
+```
 
 The TypeScript version is 5.1.6.
 
@@ -98,21 +107,72 @@ git commit -m "Add missing files and French locale skill definition"
 git push origin master
 ```
 
-18. You are now ready to start working on your skill!
+18. Set your working directory to the `lambda` folder then install dependencies:
 
-### Running (with debug)
+```bash
+cd lambda
+npm i
+```
+
+19. You are now ready to start working on your skill!
+
+### [Optional] Install the recommended VS Code extensions
+
+You can check the recommended VS Code extensions for this project by opening the Extensions view (Ctrl+Shift+X) and entering `@recommended`.
+
+### [VS Code only] Running (with debug)
+
+#### Prerequisites
+
+-   The `.vscode` folder must be at the root level of your VS Code instance for VS Code to find the debug configuration inside the [launch.json](.vscode/launch.json) file.
+
+-   The `--region` argument of the [launch.json](.vscode/launch.json) debug configuration file must match the Alexa region corresponding to the marketplace for your developer account (check [this table](https://developer.amazon.com/en-US/docs/alexa/hosted-skills/build-a-skill-end-to-end-using-an-alexa-hosted-skill.html#regions)).
+
+-   Your VS Code keyboard shortcuts for debugging (Run > Start/Stop/Restart Debugging) must match the keyboard inputs set in the [start-or-restart-vscode-debug.js](lambda/scripts/start-or-restart-vscode-debug.js) and [stop-vscode-debug.js](lambda/scripts/stop-vscode-debug.js) scripts. If you have different VS Code shortcuts for debugging, edit those files (see [the nutjs keyboard API](https://nutjs.dev/apidoc/keyboard) if needed).
+
+See the [Test Skills in Visual Studio Code page](https://developer.amazon.com/en-US/docs/alexa/ask-toolkit/vs-code-testing-simulator.html#prepare) for more details.
+
+#### Command
+
+To [run and debug your local code from VS Code](https://developer.amazon.com/en-US/docs/alexa/ask-toolkit/vs-code-testing-simulator.html#test) while compiling and reloading after code changes, run the following command (from the `lambda` folder):
 
 ```bash
 npm run dev
 ```
 
+This command will launch a debug session and route all requests to your skill to your local code. It will also:
+
+-   Warn you and ask for confirmation to continue if your `skill-package` folder has changed since your last push on master branch
+-   Lint, compile TypeScript files and restart debugger on file changes
+-   Automatically stop debugger on script exit
+
 ### Deploying
+
+To deploy your current changes to the **Development Version** of your skill, run the following command (from the `lambda` folder):
+
+```bash
+npm run deploy -- "Your commit message"
+```
+
+or if you prefer to use an automatic commit message ("Automatic deployment"):
 
 ```bash
 npm run deploy
 ```
 
-### Running Unit Tests
+This command performs the following steps:
+
+1. Automatically bump the [package.json](lambda/package.json) version if the current package file version was not changed (compared to the master branch). This is mandatory to force an npm install and the subsequent postinstall script run and compile TypeScript files on the AWS Lambda side of the Alexa-hosted skill.
+
+2. Add all current file contents to the git index. **Note that you should handle it and commit manually if you want to perform multiple commits before a deployment**.
+
+3. If necessary, commit all changes with the argument message passed to the command or with an automatic message if missing.
+
+4. Push all changes to the master branch (= skill Development Version).
+
+### Unit Testing
+
+To run the unit tests with [Bespoken](https://read.bespoken.io/unit-testing/guide/#overview), run the following command (from the `lambda` folder):
 
 ```bash
 npm run test
@@ -120,31 +180,25 @@ npm run test
 
 ### Other commands
 
+| Command                | Description                                                                                  |
+| :--------------------- | :------------------------------------------------------------------------------------------- |
+| **npm run build**      | Compile the TypeScript files from the **src** folder into the **dist** folder                |
+| **npm run clean**      | Remove the **dist** folder, the **tsconfig.tsbuildinfo** file and the **test_output** folder |
+| **npm run lint**       | Lint all TypeScript files                                                                    |
+| **npm run lint:fix**   | Lint and fix all TypeScript files                                                            |
+| **npm run lint:watch** | Lint all TypeScript files in reactive/watch mode (lint on file changes)                      |
+
 ## Folder structure
 
-| File/Folder          | Description                                                                                         |
-| :------------------- | :-------------------------------------------------------------------------------------------------- |
-| hooks                | Configuration custom build scripts, here used to compile TS files                                   |
-| infrastructure/      | Contains CloudFormation definitions for deploying the skill to AWS                                  |
-| lambda/              | Contains the source code for the skill that utilizes the ASK SDK                                    |
-| skill-package/       | Skill resources utilized by the ASK platform such as skill manifest, interaction models, and assets |
-| test/unit            | Skill unit tests, written in order to be used with Bespoken tool                                    |
-| ask-resources config | Configuration for the Alexa skill project                                                           |
-
-## Deploy the skill
-
-In order for Alexa to communicate with the skill code, it will need to be deployed and hosted on the cloud using this command.
-Using the hooks provided to deal with TypeScript files, it will take care of the compilation, before deploying JS files.
-
-```bash
-ask deploy
-```
-
-The deploy command performs the following steps:
-
-1. `skill-package/` resources will be zipped and uploaded to the ASK platform via SMAPI's [Skill Package Service](https://developer.amazon.com/docs/smapi/skill-package-api-reference.html).
-2. `lambda/` source files will be built and zipped for deployment to AWS. We currently support the build flows of npm for Nodejs, pip for Python and maven for Java developers.
-3. `infrastructure/` definitions will be used to provision resources on AWS. The `lambda/`'s zip file from the previous step will be deployed to the provisioned AWS Lambda function.
+| File/Folder     | Description                                                                                                         |
+| :-------------- | :------------------------------------------------------------------------------------------------------------------ |
+| lambda/.husky/  | Contains [husky](https://typicode.github.io/husky) git hooks                                                        |
+| lambda/scripts/ | Contains Node.js scripts used for [debug](#vs-code-only-running-with-debug) and [deployment](#deploying)            |
+| lambda/src/     | Contains the TypeScript source code for the skill that utilizes the ASK SDK                                         |
+| lambda/index.js | The JavaScript entrypoint of the Alexa skill                                                                        |
+| scripts/        | Contains Node.js scripts used to setup the Alexa-hosted skill (see [the Getting Started section](#getting-started)) |
+| skill-package/  | Skill resources utilized by the ASK platform such as skill manifest, interaction models, and assets                 |
+| test/unit/      | Skill unit tests, written in order to be used with Bespoken tool                                                    |
 
 ### Windows-users warning
 

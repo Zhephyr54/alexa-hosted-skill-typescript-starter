@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prepare": "cd .. && husky install lambda/.husky",
-    "clean": "rimraf dist tsconfig.tsbuildinfo",
+    "clean": "rimraf dist tsconfig.tsbuildinfo ../test_output",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
